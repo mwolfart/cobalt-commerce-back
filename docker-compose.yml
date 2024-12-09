@@ -1,0 +1,44 @@
+services:
+  cobalt-db:
+    container_name: cobalt-db
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: cerulean
+      POSTGRES_USER: cerulean
+      POSTGRES_DB: cobalt
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    networks:
+      - cobalt-network
+
+  cobalt-api:
+    container_name: cobalt-api
+    environment:
+      DB_HOST: cobalt-db
+      DB_USER: cerulean
+      DB_PASSWORD: cerulean
+      DB_NAME: cobalt
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      cobalt-db:
+        condition: service_healthy
+    networks:
+      - cobalt-network
+  
+volumes:
+  postgres:
+
+networks:
+  cobalt-network:
