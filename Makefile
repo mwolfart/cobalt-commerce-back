@@ -1,8 +1,14 @@
-api-install:
+install:
 	npm install
 
-api-run:
+build:
+	npm run build
+
+run:
 	npm run start
+
+watch:
+	npm run dev
 
 docker-up-api:
 	docker-compose up -d cobalt-api
