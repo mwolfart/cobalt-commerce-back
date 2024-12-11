@@ -18,3 +18,11 @@ docker-up-rebuild-api:
 
 docker-down-api:
 	docker-compose down cobalt-api
+
+mikro-orm-debug:
+	export DB_HOST=http://localhost:5440; \
+	export DB_NAME=cobalt; \
+	export DB_USER=cerulean; \
+	export DB_PASSWORD=cerulean; \
+	npx mikro-orm debug
+
