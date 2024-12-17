@@ -6,27 +6,19 @@ const main = async () => {
   const PORT = process.env.PORT || 3000;
 
   const orm = await initOrm();
-  const em = orm.em.fork();
-
-  const product = new Product();
-  product.name = "Product 1";
-  product.qty = 10;
-  product.price = 100;
-  product.description = "This is product 1";
-
-  em.persist(product).flush();
 
   const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 
-  const shutdown = () => {
+  const shutdown = async () => {
     console.log("\nGraceful shutdown initiated...");
 
-    server.close(() => {
+    await server.close(() => {
       console.log("Closed out remaining connections.");
       process.exit(0);
     });
+    await orm.close();
 
     setTimeout(() => {
       console.error("Forcing shutdown due to timeout.");

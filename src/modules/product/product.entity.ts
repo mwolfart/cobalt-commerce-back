@@ -7,12 +7,10 @@ import {
 } from "@mikro-orm/core";
 import { v4 } from "uuid";
 import { Category } from "../category/category.entity";
+import { BaseEntity } from "../common/base.entity";
 
 @Entity()
-export class Product {
-  @PrimaryKey({ type: "uuid" })
-  uuid = v4();
-
+export class Product extends BaseEntity {
   @Property()
   name!: string;
 
@@ -22,7 +20,7 @@ export class Product {
   @Property()
   price!: number;
 
-  @ManyToMany({ entity: () => Category, owner: true })
+  @ManyToMany()
   categories = new Collection<Category>(this);
 
   @Property()
