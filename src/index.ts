@@ -1,6 +1,5 @@
 import app from "./app";
 import initOrm from "./infrastructure/database/orm";
-import { Product } from "./modules/product/product.entity";
 
 const main = async () => {
   const PORT = process.env.PORT || 3000;

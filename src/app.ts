@@ -2,8 +2,9 @@ import createError from "http-errors";
 import express from "express";
 import logger from "morgan";
 
-import indexRoute from "./route/index";
-import productsRoute from "./route/product.router";
+import indexRoute from "./infrastructure/routes/index.routes";
+import productsRoute from "./infrastructure/routes/product.routes";
+import categoriesRoute from "./infrastructure/routes/category.routes";
 
 var app = express();
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/", indexRoute);
 app.use("/", productsRoute);
+app.use("/", categoriesRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
