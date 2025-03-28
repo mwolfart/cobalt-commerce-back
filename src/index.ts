@@ -1,5 +1,5 @@
 import app from "./app";
-import initOrm from "./infrastructure/orm";
+import initOrm from "./infrastructure/database/orm";
 import { Product } from "./modules/product/product.entity";
 
 const main = async () => {
