@@ -1,6 +1,6 @@
 import { EntityManager, EntityRepository, MikroORM } from "@mikro-orm/postgresql";
-import { Product } from "../../domain/modules/product/product.entity";
-import { Category } from "../../domain/modules/category/category.entity";
+import { Product } from "../../domain/entities/product/product.entity";
+import { Category } from "../../domain/entities/category/category.entity";
 import config from "./mikro-orm.config";
 
 export interface Services {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import getDB from "../database/db";
-import { Category } from "../../domain/modules/category/category.entity";
+import { Category } from "../../domain/entities/category/category.entity";
 export default {
   getAllCategories: async (_req: Request, res: Response) => {
     const { category } = await getDB();
