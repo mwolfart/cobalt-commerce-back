@@ -1,10 +1,13 @@
+import { RequestContext } from "@mikro-orm/postgresql";
 import app from "./app";
-import initOrm from "./infrastructure/database/orm";
+import getDB from "./infrastructure/database/db";
 
-const main = async () => {
+const main = async (initialize: boolean = false) => {
   const PORT = process.env.PORT || 3000;
 
-  const orm = await initOrm();
+  const {orm, em} = await getDB(initialize);
+
+  app.use((req, res, next) => RequestContext.create(em, next));
 
   const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
@@ -29,7 +32,8 @@ const main = async () => {
   process.on("SIGTERM", shutdown);
 };
 
-main().catch((err) => {
+const initialize = process.argv.includes('--initialize');
+main(initialize).catch((err) => {
   console.error(err);
   process.exit(1);
 });

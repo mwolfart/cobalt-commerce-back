@@ -29,8 +29,26 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
+      target: api
     ports:
       - "3010:3000"
+    depends_on:
+      cobalt-db:
+        condition: service_healthy
+    networks:
+      - cobalt-network
+
+  cobalt-db-init:
+    container_name: cobalt-db-init
+    environment:
+      DB_HOST: cobalt-db
+      DB_USER: cerulean
+      DB_PASSWORD: cerulean
+      DB_NAME: cobalt
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: db-init
     depends_on:
       cobalt-db:
         condition: service_healthy

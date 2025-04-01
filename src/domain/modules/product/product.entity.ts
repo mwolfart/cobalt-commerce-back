@@ -26,6 +26,6 @@ export class Product extends BaseEntity {
   @Property()
   image = "";
 
-  @Property({ type: "text" })
+  @Property({ type: "text", lazy: true })
   description = "";
 }
