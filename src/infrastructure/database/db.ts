@@ -1,13 +1,13 @@
-import { EntityManager, EntityRepository, MikroORM } from "@mikro-orm/postgresql";
-import { Product } from "../../domain/entities/product/product.entity";
-import { Category } from "../../domain/entities/category/category.entity";
+import { EntityManager, MikroORM } from "@mikro-orm/postgresql";
+import { ProductRepository } from "./repositories/product.repository";
+import { CategoryRepository } from "./repositories/category.repository";
 import config from "./mikro-orm.config";
 
 export interface Services {
   orm: MikroORM;
   em: EntityManager;
-  product: EntityRepository<Product>;
-  category: EntityRepository<Category>;
+  productRepository: ProductRepository;
+  categoryRepository: CategoryRepository;
 }
 
 let cache: Services | null = null;
@@ -21,11 +21,13 @@ const getDB = async (initialize: boolean = false) => {
     await orm.schema.refreshDatabase();
   }
 
+  const em = orm.em.fork();
+
   return cache = {
     orm,
-    em: orm.em.fork(),
-    product: orm.em.fork().getRepository(Product),
-    category: orm.em.fork().getRepository(Category),
+    em,
+    productRepository: new ProductRepository(em),
+    categoryRepository: new CategoryRepository(em),
   };
 };
 

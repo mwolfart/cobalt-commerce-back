@@ -1,9 +1,17 @@
-import express from "express";
-import categoryController from "../controller/category.controller";
+import { Router } from "express";
+import getDB from "../database/db";
+import { CategoryController } from "../controller/category.controller";
+import { CategoryService } from "../../application/services/category.service";
 
-const router = express.Router();
+export const createCategoryRoutes = async () => {
+    const router = Router();
+    const { categoryRepository } = await getDB();
+    
+    const categoryService = new CategoryService(categoryRepository);
+    const categoryController = new CategoryController(categoryService);
 
-router.get("/api/v1/category", categoryController.getAllCategories);
-router.post("/api/v1/category", categoryController.postCategory);
+    router.get("/", categoryController.getAllCategories.bind(categoryController));
+    router.post("/", categoryController.postCategory.bind(categoryController));
 
-export default router;
+    return router;
+};

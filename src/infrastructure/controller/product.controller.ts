@@ -1,24 +1,28 @@
 import { Request, Response } from "express";
-import getDB from "../database/db";
+import { ProductService } from "../../application/services/product.service";
 
-export default {
-  getAllProducts: async (_req: Request, res: Response) => {
-    const {product} = await getDB();
-    const products = await product.findAll();
-    res.status(200).json({ data: products });
-  },
+export class ProductController {
+    constructor(private readonly productService: ProductService) {}
 
-  postProduct: (_req: Request, res: Response) => {
-    res.status(201).json({ message: "POST product" });
-  },
+    async getAllProducts(_req: Request, res: Response): Promise<void> {
+        const products = await this.productService.getAllProducts();
+        res.status(200).json({ data: products });
+    }
 
-  getProduct: async (req: Request, res: Response) => {
-    const {product} = await getDB();
-    const p = await product.findOne(req.params.id);
-    res.status(200).json({ data: p });
-  },
+    async createProduct(req: Request, res: Response): Promise<void> {
+        const { name, price, qty } = req.body;
+        const product = await this.productService.createProduct(name, price, qty);
+        res.status(201).json({ data: product });
+    }
 
-  patchProduct: (_req: Request, res: Response) => {
-    res.status(200).json({ message: "PATCH product" });
-  },
-};
+    async getProduct(req: Request, res: Response): Promise<void> {
+        const product = await this.productService.getProductById(req.params.id);
+        res.status(200).json({ data: product });
+    }
+
+    async updateProduct(req: Request, res: Response): Promise<void> {
+        const { name, price, qty } = req.body;
+        const product = await this.productService.updateProduct(req.params.id, name, price, qty);
+        res.status(200).json({ data: product });
+    }
+}

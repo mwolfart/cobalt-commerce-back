@@ -1,5 +1,5 @@
 import { RequestContext } from "@mikro-orm/postgresql";
-import app from "./app";
+import createApp from "./app";
 import getDB from "./infrastructure/database/db";
 
 const main = async (initialize: boolean = false) => {
@@ -7,6 +7,7 @@ const main = async (initialize: boolean = false) => {
 
   const {orm, em} = await getDB(initialize);
 
+  const app = await createApp();
   app.use((req, res, next) => RequestContext.create(em, next));
 
   const server = app.listen(PORT, () => {
@@ -37,5 +38,3 @@ main(initialize).catch((err) => {
   console.error(err);
   process.exit(1);
 });
-
-module.exports = app;

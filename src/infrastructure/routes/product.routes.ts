@@ -1,11 +1,19 @@
-import express from "express";
-import productController from "../controller/product.controller";
+import { Router } from "express";
+import getDB from "../database/db";
+import { ProductController } from "../controller/product.controller";
+import { ProductService } from "../../application/services/product.service";
 
-const router = express.Router();
+export const createProductRoutes = async () => {
+    const router = Router();
+    const { productRepository } = await getDB();
+    
+    const productService = new ProductService(productRepository);
+    const productController = new ProductController(productService);
 
-router.get("/api/v1/product", productController.getAllProducts);
-router.post("/api/v1/product", productController.postProduct);
-router.get("/api/v1/product/:id", productController.getProduct);
-router.patch("/api/v1/product/:id", productController.patchProduct);
+    router.get("/", productController.getAllProducts.bind(productController));
+    router.post("/", productController.createProduct.bind(productController));
+    router.get("/:id", productController.getProduct.bind(productController));
+    router.patch("/:id", productController.updateProduct.bind(productController));
 
-export default router;
+    return router;
+};
