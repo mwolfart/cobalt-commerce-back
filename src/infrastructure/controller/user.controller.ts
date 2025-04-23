@@ -21,7 +21,7 @@ export class UserController {
 
     const canAccess = this.authService.validateRole(
       authorization as string,
-      "admin",
+      "Admin",
     );
     if (!canAccess) {
       res.status(403).json({ message: "forbidden" });

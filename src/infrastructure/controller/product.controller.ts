@@ -26,7 +26,7 @@ export class ProductController {
 
     const canAccess = this.authService.validateRole(
       authorization as string,
-      "admin",
+      "Admin",
     );
     if (!canAccess) {
       res.status(403).json({ message: "forbidden" });
@@ -63,7 +63,7 @@ export class ProductController {
 
     const canAccess = this.authService.validateRole(
       authorization as string,
-      "admin",
+      "Admin",
     );
     if (!canAccess) {
       res.status(403).json({ message: "forbidden" });

@@ -35,7 +35,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findUserByEmail(email: string): Promise<User | null> {
-    const user = await this.em.findOne(User, { email });
+    const user = await this.em.findOne(User, { email }, { populate: ["role"] });
     return user || null;
   }
 }
