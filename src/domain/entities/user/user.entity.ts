@@ -1,4 +1,4 @@
-import { Entity, Property } from "@mikro-orm/core";
+import { Entity, ManyToOne, Property } from "@mikro-orm/core";
 import { BaseEntity } from "../common/base.entity";
 import { Role } from "../role/role.entity";
 
@@ -7,13 +7,13 @@ export class User extends BaseEntity {
   @Property()
   name!: string;
 
-  @Property()
+  @Property({ unique: true })
   email!: string;
 
   @Property()
   password!: string;
 
-  @Property()
+  @ManyToOne()
   role!: Role;
 
   @Property()

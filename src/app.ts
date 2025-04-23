@@ -5,6 +5,8 @@ import logger from "morgan";
 import indexRoute from "./infrastructure/routes/index.routes";
 import { createCategoryRoutes } from "./infrastructure/routes/category.routes";
 import { createProductRoutes } from "./infrastructure/routes/product.routes";
+import { createAuthRoutes } from "./infrastructure/routes/auth.routes";
+import { createUserRoutes } from "./infrastructure/routes/user.routes";
 
 const createApp = async () => {
   const app = express();
@@ -17,6 +19,7 @@ const createApp = async () => {
   app.use("/api/v1/product", await createProductRoutes());
   app.use("/api/v1/category", await createCategoryRoutes());
   app.use("/api/v1/auth", await createAuthRoutes());
+  app.use("/api/v1/user", await createUserRoutes());
 
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {

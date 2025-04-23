@@ -1,10 +1,8 @@
 import { Router } from "express";
 import getDB from "../database/db";
-import { ProductController } from "../controller/product.controller";
-import { ProductService } from "../../application/services/product.service";
-import { UserService } from "src/application/services/user.service";
+import { UserService } from "../../application/services/user.service";
 import { UserController } from "../controller/user.controller";
-import { AuthService } from "src/application/services/auth.service";
+import { AuthService } from "../../application/services/auth.service";
 
 export const createUserRoutes = async () => {
   const router = Router();

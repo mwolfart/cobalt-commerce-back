@@ -1,7 +1,7 @@
-import { IUserRepository } from "src/domain/repositories/i.user.repository";
-import * as bcrypt from "bcrypt";
+import { IUserRepository } from "../../domain/repositories/i.user.repository";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { User } from "src/domain/entities/user/user.entity";
+import { User } from "../../domain/entities/user/user.entity";
 import { AuthDto } from "../dtos/auth.dto";
 import { ValidationError } from "@mikro-orm/core";
 

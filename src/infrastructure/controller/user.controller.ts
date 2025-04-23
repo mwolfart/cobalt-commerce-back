@@ -1,8 +1,7 @@
 import { ValidationError } from "@mikro-orm/core";
 import { Request, Response } from "express";
-import { UserService } from "src/application/services/user.service";
-import * as jwt from "jsonwebtoken";
-import { AuthService } from "src/application/services/auth.service";
+import { UserService } from "../../application/services/user.service";
+import { AuthService } from "../../application/services/auth.service";
 
 export class UserController {
   constructor(

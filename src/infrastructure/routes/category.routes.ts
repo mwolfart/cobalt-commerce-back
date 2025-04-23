@@ -2,7 +2,7 @@ import { Router } from "express";
 import getDB from "../database/db";
 import { CategoryController } from "../controller/category.controller";
 import { CategoryService } from "../../application/services/category.service";
-import { AuthService } from "src/application/services/auth.service";
+import { AuthService } from "../../application/services/auth.service";
 
 export const createCategoryRoutes = async () => {
   const router = Router();

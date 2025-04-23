@@ -1,4 +1,4 @@
-import { AuthService } from "src/application/services/auth.service";
+import { AuthService } from "../../application/services/auth.service";
 import getDB from "../database/db";
 import { AuthController } from "../controller/auth.controller";
 import { Router } from "express";

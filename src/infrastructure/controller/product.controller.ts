@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ProductService } from "../../application/services/product.service";
 import { ValidationError } from "@mikro-orm/core";
-import { AuthService } from "src/application/services/auth.service";
+import { AuthService } from "../../application/services/auth.service";
 
 export class ProductController {
   constructor(

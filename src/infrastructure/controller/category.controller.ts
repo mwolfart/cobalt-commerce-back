@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { CategoryService } from "../../application/services/category.service";
 import { ValidationError } from "@mikro-orm/core";
-import { AuthService } from "src/application/services/auth.service";
+import { AuthService } from "../../application/services/auth.service";
 
 export class CategoryController {
   constructor(

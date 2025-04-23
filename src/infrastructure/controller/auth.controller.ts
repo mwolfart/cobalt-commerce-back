@@ -1,6 +1,6 @@
 import { ValidationError } from "@mikro-orm/core";
 import { Request, Response } from "express";
-import { AuthService } from "src/application/services/auth.service";
+import { AuthService } from "../../application/services/auth.service";
 
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

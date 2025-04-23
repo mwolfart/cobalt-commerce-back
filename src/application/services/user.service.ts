@@ -1,10 +1,10 @@
 import { ValidationError } from "@mikro-orm/core";
 import Joi from "joi";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { CreateUserDto } from "../dtos/create-user.dto";
-import { User } from "src/domain/entities/user/user.entity";
-import { IUserRepository } from "src/domain/repositories/i.user.repository";
-import { IRoleRepository } from "src/domain/repositories/i.role.repository";
+import { User } from "../../domain/entities/user/user.entity";
+import { IUserRepository } from "../../domain/repositories/i.user.repository";
+import { IRoleRepository } from "../../domain/repositories/i.role.repository";
 
 export class UserService {
   constructor(

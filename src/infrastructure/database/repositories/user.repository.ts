@@ -1,7 +1,7 @@
 import { EntityManager } from "@mikro-orm/postgresql";
-import { Role } from "src/domain/entities/role/role.entity";
-import { User } from "src/domain/entities/user/user.entity";
-import { IUserRepository } from "src/domain/repositories/i.user.repository";
+import { Role } from "../../../domain/entities/role/role.entity";
+import { User } from "../../../domain/entities/user/user.entity";
+import { IUserRepository } from "../../../domain/repositories/i.user.repository";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly em: EntityManager) {}
