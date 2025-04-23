@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
 import { ProductService } from "../../application/services/product.service";
 import { ValidationError } from "@mikro-orm/core";
+import { AuthService } from "src/application/services/auth.service";
 
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly authService: AuthService,
+  ) {}
 
   async getAllProducts(_req: Request, res: Response): Promise<void> {
     const products = await this.productService.getAllProducts();
@@ -11,6 +15,24 @@ export class ProductController {
   }
 
   async createProduct(req: Request, res: Response): Promise<void> {
+    const authorization = req.headers.authorization;
+    const hasValidToken = this.authService.validateToken(
+      authorization as string,
+    );
+    if (!hasValidToken) {
+      res.status(401).json({ message: "unauthorized" });
+      return;
+    }
+
+    const canAccess = this.authService.validateRole(
+      authorization as string,
+      "admin",
+    );
+    if (!canAccess) {
+      res.status(403).json({ message: "forbidden" });
+      return;
+    }
+
     const payload = req.body;
     try {
       const product = await this.productService.createProduct(payload);
@@ -30,6 +52,24 @@ export class ProductController {
   }
 
   async updateProduct(req: Request, res: Response): Promise<void> {
+    const authorization = req.headers.authorization;
+    const hasValidToken = this.authService.validateToken(
+      authorization as string,
+    );
+    if (!hasValidToken) {
+      res.status(401).json({ message: "unauthorized" });
+      return;
+    }
+
+    const canAccess = this.authService.validateRole(
+      authorization as string,
+      "admin",
+    );
+    if (!canAccess) {
+      res.status(403).json({ message: "forbidden" });
+      return;
+    }
+
     const payload = req.body;
 
     try {

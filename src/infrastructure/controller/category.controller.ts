@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
 import { CategoryService } from "../../application/services/category.service";
 import { ValidationError } from "@mikro-orm/core";
+import { AuthService } from "src/application/services/auth.service";
 
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly authService: AuthService,
+  ) {}
 
   async getAllCategories(_req: Request, res: Response) {
     const categories = await this.categoryService.getAllCategories();
@@ -11,6 +15,24 @@ export class CategoryController {
   }
 
   async postCategory(req: Request, res: Response) {
+    const authorization = req.headers.authorization;
+    const hasValidToken = this.authService.validateToken(
+      authorization as string,
+    );
+    if (!hasValidToken) {
+      res.status(401).json({ message: "unauthorized" });
+      return;
+    }
+
+    const canAccess = this.authService.validateRole(
+      authorization as string,
+      "admin",
+    );
+    if (!canAccess) {
+      res.status(403).json({ message: "forbidden" });
+      return;
+    }
+
     const payload = req.body;
 
     try {

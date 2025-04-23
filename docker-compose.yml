@@ -26,6 +26,7 @@ services:
       DB_USER: cerulean
       DB_PASSWORD: cerulean
       DB_NAME: cobalt
+      JWT_SECRET: crimson
     build:
       dockerfile: Dockerfile
       context: .
