@@ -4,6 +4,7 @@ import { CategoryRepository } from "./repositories/category.repository";
 import config from "./mikro-orm.config";
 import { UserRepository } from "./repositories/user.repository";
 import { RoleRepository } from "./repositories/role.repository";
+import { populateDB } from "./populate";
 
 export interface Services {
   orm: MikroORM;
@@ -23,6 +24,7 @@ const getDB = async (initialize: boolean = false) => {
 
   if (initialize) {
     await orm.schema.refreshDatabase();
+    await populateDB(orm.em.fork());
   }
 
   const em = orm.em.fork();

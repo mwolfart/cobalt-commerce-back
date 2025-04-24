@@ -58,17 +58,21 @@ export class AuthService {
       return false;
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-      email: string;
-      name: string;
-      role: string;
-      sub: string;
-    };
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+        email: string;
+        name: string;
+        role: string;
+        sub: string;
+      };
 
-    if (!decoded) {
+      if (!decoded) {
+        return false;
+      }
+      return decoded;
+    } catch (error) {
       return false;
     }
-    return decoded;
   }
 
   validateRole(authorization: string, role: string) {
