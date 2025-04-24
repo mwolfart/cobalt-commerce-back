@@ -23,8 +23,11 @@ export class Product extends BaseEntity {
   @ManyToMany()
   categories = new Collection<Category>(this);
 
-  @Property()
+  @Property({ lazy: true })
   image = "";
+
+  @Property()
+  thumbnail = "";
 
   @Property({ type: "text", lazy: true })
   description = "";
